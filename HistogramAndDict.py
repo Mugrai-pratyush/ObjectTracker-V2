@@ -45,22 +45,29 @@ def dictCreator(PixelDict,height,width,D2pixelarr):
             pixelPoseArr=[i,j]
             PixelDict[key].append(pixelPoseArr)
     return PixelDict
-def squarefinder(dict):
+def squarefinder(dict, side):
     """
     Calulates points using pixeldict
     returns:Pointsarray
     """
-    pointsarray=dict[255]
-    A=pointsarray[0]
-    forB=[]
-    forC=[]
-    for i in pointsarray:
-        forB.append(i[1])
-        forC.append(i[0])
-    maxlateredge=max(forB)
-    maxh=max(forC)
-    B=[A[0],maxlateredge]
-    C=[maxh,A[1]]
-    D=[maxh,maxlateredge]
-    points=[A,B,C,D]
-    return points
+    probable_pixel = None
+    for key in dict:
+        if len(dict[key]) >= side * side:
+            probable_pixel = key
+            break
+
+    if probable_pixel is None:
+        raise ValueError("Square not found")
+
+    pointsarray =dict[probable_pixel]
+    min_row = min(p[0] for p in pointsarray)
+    max_row = max(p[0] for p in pointsarray)
+    min_col = min(p[1] for p in pointsarray)
+    max_col = max(p[1] for p in pointsarray)
+
+    A = [min_row, min_col]
+    B = [min_row, max_col]
+    C = [max_row, min_col]
+    D = [max_row, max_col]
+
+    return [A, B, C, D]

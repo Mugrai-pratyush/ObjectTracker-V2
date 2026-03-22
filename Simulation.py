@@ -15,7 +15,7 @@ def Sim(runs,height,width,side,SquarePixelVal):
         histogramCreater(Histogram,height,width,Bg_square)
         dictCreator(Pixeldict,height,width,Bg_square)
         ####Now we find the Square from the dict
-        SquarePos=squarefinder(Pixeldict)
+        SquarePos = squarefinder(Pixeldict, side)
         PathArr.append(SquarePos)
         inirun+=1
     return PathArr
